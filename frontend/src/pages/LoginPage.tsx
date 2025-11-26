@@ -1,9 +1,9 @@
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button } from "../components/ui/button";
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Button } from '../components/ui/button';
 import {
   Form,
   FormControl,
@@ -11,19 +11,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../components/ui/form";
-import { Input } from "../components/ui/input";
-import { useToast } from "../hooks/use-toast";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
-import { useAuth } from "../context/AuthContext";
-import api from "../lib/axios";
+} from '../components/ui/form';
+import { Input } from '../components/ui/input';
+import { useToast } from '../hooks/use-toast';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../components/ui/card';
+import { useAuth } from '../context/AuthContext';
+import api from '../lib/axios';
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: 'Please enter a valid email address.',
   }),
   password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+    message: 'Password must be at least 6 characters.',
   }),
 });
 
@@ -34,13 +41,13 @@ export function LoginPage() {
   const { login } = useAuth();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || '/';
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -51,16 +58,16 @@ export function LoginPage() {
       if (response.data.success) {
         login(response.data.user);
         toast({
-          title: "Login Successful",
-          description: "Welcome back to RestroExplorer!",
+          title: 'Login Successful',
+          description: 'Welcome back to RestroExplorer!',
         });
         navigate(from, { replace: true });
       }
     } catch (error: any) {
       toast({
-        variant: "destructive",
-        title: "Login Failed",
-        description: error.response?.data?.error || "Something went wrong",
+        variant: 'destructive',
+        title: 'Login Failed',
+        description: error.response?.data?.error || 'Something went wrong',
       });
     } finally {
       setIsLoading(false);
@@ -73,9 +80,7 @@ export function LoginPage() {
         <CardTitle className="text-2xl font-bold tracking-tight">
           Login to your account
         </CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
+        <CardDescription>Enter your email below to login to your account</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <Form {...form}>
@@ -107,15 +112,14 @@ export function LoginPage() {
               )}
             />
             <Button className="w-full" type="submit" disabled={isLoading}>
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
         </Form>
-
       </CardContent>
       <CardFooter>
         <p className="w-full text-center text-sm text-muted-foreground">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <Link
             to="/auth/signup"
             className="font-medium text-primary underline-offset-4 hover:underline"

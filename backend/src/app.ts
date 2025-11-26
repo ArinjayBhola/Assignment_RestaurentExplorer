@@ -9,17 +9,10 @@ import { notFoundHandler } from './middlewares/notFoundHandler';
 
 const app = express();
 
-// app.use(
-//   cors({
-//     origin: process.env.CLIENT_URL?.split(',') ?? 'http://localhost:5173',
-//     credentials: true,
-//   }),
-// );
 app.use(
   cors({
-    origin: '*',
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
+    origin: process.env.CLIENT_URL?.split(',') ?? 'http://localhost:5173',
+    credentials: true,
   }),
 );
 app.use(express.json());
