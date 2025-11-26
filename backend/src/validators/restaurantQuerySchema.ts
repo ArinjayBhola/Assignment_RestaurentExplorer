@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const numericField = (fallback?: number) =>
-  z.preprocess((value) => {
+  z.preprocess((value: unknown) => {
     if (value === undefined || value === null || value === '') {
       return fallback ?? undefined;
     }

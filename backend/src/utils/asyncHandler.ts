@@ -1,8 +1,8 @@
-import type { RequestHandler } from 'express';
+import type { Request, Response, NextFunction, RequestHandler } from 'express';
 
 export const asyncHandler =
   (handler: RequestHandler): RequestHandler =>
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       await handler(req, res, next);
     } catch (error) {

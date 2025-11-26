@@ -51,17 +51,19 @@ const UserSchema: Schema = new Schema(
 );
 
 // Encrypt password using bcrypt
-UserSchema.pre<IUser>('save', async function (next) {
+// Encrypt password using bcrypt
+UserSchema.pre('save', async function (this: IUser, next) {
   if (!this.isModified('password')) {
-    next();
+    return next();
   }
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 // Match user entered password to hashed password in database
-UserSchema.methods.comparePassword = async function (candidatePassword: string) {
+UserSchema.methods.comparePassword = async function (this: IUser, candidatePassword: string) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
