@@ -8,7 +8,7 @@ export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   return (
-    <div className="flex h-screen bg-muted/10">
+    <div className="flex h-screen bg-background">
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}

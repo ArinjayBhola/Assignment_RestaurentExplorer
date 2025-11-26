@@ -13,15 +13,7 @@ const generateToken = (id: string) => {
 const sendTokenResponse = (user: any, statusCode: number, res: Response) => {
   const token = generateToken(user._id);
 
-  const options = {
-    expires: new Date(
-      Date.now() + (Number(process.env.JWT_COOKIE_EXPIRE) || 30) * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-  };
-
-  res.status(statusCode).cookie('token', token, options).json({
+  res.status(statusCode).json({
     success: true,
     token,
     user: {
@@ -99,11 +91,6 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 // @route   GET /api/auth/logout
 // @access  Private
 export const logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-
   res.status(200).json({
     success: true,
     data: {},

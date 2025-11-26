@@ -13,7 +13,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
-  login: (userData: User) => void;
+  login: (userData: User, token: string) => void;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -25,14 +25,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data } = await api.get('/auth/me');
       if (data.success) {
         setUser(data.data);
       } else {
+        localStorage.removeItem('token');
         setUser(null);
       }
     } catch (error) {
+      localStorage.removeItem('token');
       setUser(null);
     } finally {
       setLoading(false);
@@ -43,16 +51,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const login = (userData: User) => {
+  const login = (userData: User, token: string) => {
+    localStorage.setItem('token', token);
     setUser(userData);
   };
 
   const logout = async () => {
     try {
-      await api.get('/auth/logout');
+      // Optional: Call backend logout if needed for other cleanup, 
+      // but for JWT it's mostly client-side
+      // await api.get('/auth/logout'); 
+      localStorage.removeItem('token');
       setUser(null);
     } catch (error) {
       console.error('Logout failed', error);
+      localStorage.removeItem('token');
+      setUser(null);
     }
   };
 

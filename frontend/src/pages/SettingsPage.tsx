@@ -5,8 +5,10 @@ import { Switch } from "@/components/ui/switch";
 import { Typography } from "@/components/ui/typography";
 import { Bell, Moon, Shield } from "lucide-react";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { useTheme } from "@/context/ThemeContext";
 
 export function SettingsPage() {
+  const { theme, setTheme } = useTheme();
   return (
     <PageTransition className="space-y-8 max-w-4xl">
       <div>
@@ -28,7 +30,10 @@ export function SettingsPage() {
               <Label>Dark Mode</Label>
               <p className="text-sm text-muted-foreground">Enable dark mode for better viewing at night.</p>
             </div>
-            <Switch />
+            <Switch
+              checked={theme === 'dark'}
+              onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+            />
           </div>
         </CardContent>
       </Card>
