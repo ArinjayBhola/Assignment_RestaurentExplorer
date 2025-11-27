@@ -61,13 +61,60 @@ Base URL: `/api`
 
 ## Getting Started
 
-1.  **Backend Setup:**
-    *   Navigate to the `backend` directory.
-    *   Install dependencies: `npm install`
-    *   Set up environment variables (copy `.env.example` to `.env`).
-    *   Start the server: `npm run dev`
+Follow these instructions to run the project locally on your machine.
 
-2.  **Frontend Setup:**
-    *   Navigate to the `frontend` directory.
-    *   Install dependencies: `npm install`
-    *   Start the development server: `npm run dev`
+### Prerequisites
+
+*   **Node.js** (v18 or higher recommended)
+*   **npm** (Node Package Manager)
+*   **MongoDB** (Local instance or Atlas URI)
+
+### Installation & Setup
+
+#### 1. Backend Setup
+
+1.  Navigate to the `backend` directory:
+    ```bash
+    cd backend
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  **Environment Variables**:
+    Create a `.env` file in the `backend` directory and add the following variables:
+    ```env
+    MONGO_URI=your_mongodb_connection_string
+    CLIENT_URL=http://localhost:5173
+    ```
+    *   `MONGO_URI`: Your MongoDB connection string.
+    *   `CLIENT_URL`: The URL where your frontend application will run (default is `http://localhost:5173` for Vite).
+
+4.  Start the backend server:
+    ```bash
+    npm run dev
+    ```
+    The server should be running on `http://localhost:5000` (or your configured port).
+
+#### 2. Frontend Setup
+
+1.  Open a new terminal and navigate to the `frontend` directory:
+    ```bash
+    cd frontend
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  **Environment Variables**:
+    Create a `.env` file in the `frontend` directory and add the following variable:
+    ```env
+    VITE_API_URL=http://localhost:5000/api
+    ```
+    *   `VITE_API_URL`: The full URL of your backend API (ensure it ends with `/api` if your backend routes are prefixed).
+
+4.  Start the frontend development server:
+    ```bash
+    npm run dev
+    ```
+    The application should now be accessible at `http://localhost:5173`.
